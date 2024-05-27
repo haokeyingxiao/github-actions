@@ -6,12 +6,12 @@ on:
         required: true
         type: string
       cliVersion:
-        description: 'The shopware-cli version to build the extension with'
+        description: 'The haoke-cli version to build the extension with'
         required: false
         type: string
         default: 'latest'
       publishOnly:
-        description: 'Publish only to Shopware Store and dont create a tag'
+        description: 'Publish only to HaoKe Store and dont create a tag'
         required: false
         type: boolean
         default: false
@@ -32,15 +32,15 @@ jobs:
         with:
           # fetch all git entries for changelog generation
           fetch-depth: 0
-      - name: Install shopware-cli
-        uses: FriendsOfShopware/shopware-cli-action@v1
+      - name: Install haoke-cli
+        uses: haokeyingxiao/haoke-cli-action@v1
         with:
           version: ${{ inputs.cliVersion }}
       - name: Build & create zip
         env:
           NODE_OPTIONS: --openssl-legacy-provider
         run: |
-          shopware-cli extension zip --git-commit ${{ github.sha }} . --release
+          haoke-cli extension zip --git-commit ${{ github.sha }} . --release
           mv ${{ inputs.extensionName }}-${{ github.sha }}.zip ${{ inputs.extensionName }}.zip
       - name: Upload Artefact
         uses: actions/upload-artifact@v4
@@ -49,7 +49,7 @@ jobs:
           path: ${{ inputs.extensionName }}.zip
       - name: Get version
         run: |
-          echo "EXTENSION_VERSION=$(shopware-cli extension get-version .)" >> $GITHUB_ENV
+          echo "EXTENSION_VERSION=$(haoke-cli extension get-version .)" >> $GITHUB_ENV
       - name: Check Tag existence
         uses: mukunku/tag-exists-action@v1.6.0
         id: checkTag
@@ -58,16 +58,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ghToken }}
       - name: Validate Zip
-        run: shopware-cli extension validate $(pwd)/${{ inputs.extensionName }}.zip
+        run: haoke-cli extension validate $(pwd)/${{ inputs.extensionName }}.zip
       - name: Store Upload
-        run: shopware-cli account producer extension upload $(pwd)/${{ inputs.extensionName }}.zip
+        run: haoke-cli account producer extension upload $(pwd)/${{ inputs.extensionName }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.ghToken }}
           SHOPWARE_CLI_ACCOUNT_EMAIL: ${{ secrets.accountUser }}
           SHOPWARE_CLI_ACCOUNT_PASSWORD: ${{ secrets.accountPassword }}
       - name: Extract Changelog
         if: steps.checkTag.outputs.exists != 'true' && inputs.publishOnly == false
-        run: shopware-cli extension get-changelog $(pwd)/${{ inputs.extensionName }}.zip > /tmp/changelog.txt
+        run: haoke-cli extension get-changelog $(pwd)/${{ inputs.extensionName }}.zip > /tmp/changelog.txt
       - name: Unzip
         if: inputs.publishOnly == false
         run: |

@@ -6,7 +6,7 @@ on:
           description: 'Your extension name'
           required: true
           type: string
-        shopwareVersion:
+        haokeVersion:
           required: false
           type: string
           default: 'trunk'
@@ -25,10 +25,10 @@ jobs:
         name: Jest
         runs-on: ubuntu-latest
         steps:
-            - name: Setup Shopware
-              uses: shopware/setup-shopware@main
+            - name: Setup HaoKe
+              uses: haokeyingxiao/setup-haoke@main
               with:
-                shopware-version: ${{ inputs.shopwareVersion }}
+                haoke-version: ${{ inputs.haokeVersion }}
                 php-version: 8.2
                 env: prod
                 install: 'true'

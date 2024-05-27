@@ -12,10 +12,10 @@ jobs:
     name: ESLint
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Shopware
+      - name: Clone HaoKe
         uses: actions/checkout@v4
         with:
-         repository: shopware/shopware
+         repository: haokeyingxiao/haoke
          ref: trunk
 
       - name: Clone Extension

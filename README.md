@@ -1,4 +1,4 @@
-# Reuseable GitHub Actions for Shopware Extensions
+# Reuseable GitHub Actions for HaoKe Extensions
 
 ## cs-fixer
 
@@ -7,22 +7,22 @@ Installs PHP-CS-Fixer and runs [PER Coding Style 2.0](https://www.php-fig.org/pe
 ```yaml
 jobs:
     cs:
-        uses: shopware/github-actions/.github/workflows/cs-fixer.yml@main
+        uses: haokeyingxiao/github-actions/.github/workflows/cs-fixer.yml@main
 ```
 
 ## phpstan
 
-Installs PHPStan together with Shopware and the Extension and runs PHPStan
+Installs PHPStan together with HaoKe and the Extension and runs PHPStan
 
 ```yaml
 jobs:
     phpstan:
-        uses: shopware/github-actions/.github/workflows/phpstan.yml@main
+        uses: haokeyingxiao/github-actions/.github/workflows/phpstan.yml@main
         with:
           # Extension name
           extensionName: MyExtensionName
-          # Run against Shopware version
-          shopwareVersion: 6.5.x
+          # Run against HaoKe version
+          haokeVersion: 6.6.x
 ```
 
 ## PHPUnit
@@ -30,12 +30,12 @@ jobs:
 ```yaml
 jobs:
   phpunit:
-    uses: shopware/github-actions/.github/workflows/phpunit.yml@main
+    uses: haokeyingxiao/github-actions/.github/workflows/phpunit.yml@main
     with:
       # Extension Name
       extensionName: MyExtensionName
-      # Run against Shopware version
-      shopwareVersion: 6.5.x
+      # Run against HaoKe version
+      haokeVersion: 6.6.x
 ```
 
 With Code Coverage with [codecov](https://about.codecov.io/)
@@ -43,10 +43,10 @@ With Code Coverage with [codecov](https://about.codecov.io/)
 ```yaml
 jobs:
   phpunit:
-    uses: shopware/github-actions/.github/workflows/phpunit.yml@main
+    uses: haokeVersion/github-actions/.github/workflows/phpunit.yml@main
     with:
       extensionName: SwagPlatformDemoData
-      shopwareVersion: 6.5.x
+      haokeVersion: 6.6.x
       uploadCoverage: true
     secrets:
       codecovToken: ${{ secrets.CODECOV_TOKEN }}
@@ -54,12 +54,12 @@ jobs:
 
 ## Build Zip
 
-Builds the Extension zip and validates the Zip using shopware-cli
+Builds the Extension zip and validates the Zip using haoke-cli
 
 ```yaml
 jobs:
   zip:
-    uses: shopware/github-actions/.github/workflows/build-zip.yml@main
+    uses: haokeVersion/github-actions/.github/workflows/build-zip.yml@main
     with:
       # Extension Name
       extensionName: MyExtensionName
@@ -75,7 +75,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    uses: shopware/github-actions/.github/workflows/store-release.yml@main
+    uses: haokeVersion/github-actions/.github/workflows/store-release.yml@main
     with:
       extensionName: ${{ github.event.repository.name }}
     secrets:
@@ -92,13 +92,13 @@ input should a JSON array of objects containing the extension name and repositor
 ```yaml
 jobs:
     phpstan:
-        uses: shopware/github-actions/.github/workflows/phpstan.yml@main
+        uses: haokeVersion/github-actions/.github/workflows/phpstan.yml@main
         with:
           extensionName: MyExtensionName
-          shopwareVersion: 6.5.x
+          haokeVersion: 6.5.x
           dependencies: |-
             [
-              {"name": "SwagPlatformDemoData", "repo": "git@github.com:shopware/SwagPlatformDemoData.git"}
+              {"name": "HkagPlatformDemoData", "repo": "git@github.com:haokeVersion/HkagPlatformDemoData.git"}
             ]
 ```
 
@@ -108,10 +108,10 @@ The secret should be defined in your GitHub repository.
 ```yaml
 jobs:
     phpstan:
-        uses: shopware/github-actions/.github/workflows/phpstan.yml@main
+        uses: haokeVersion/github-actions/.github/workflows/phpstan.yml@main
         with:
           extensionName: MyExtensionName
-          shopwareVersion: 6.5.x
+          haokeVersion: 6.5.x
           dependencies: |-
             [
               {"name": "MyPrivateExtension", "repo": "https://user:$MY_EXTENSION_TOKEN@gitlab.domain.com/org/my-extension.git"}
