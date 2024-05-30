@@ -9,7 +9,7 @@ on:
       haokeVersion:
         required: false
         type: string
-        default: '6.6'
+        default: 'trunk'
       phpVersion:
         required: false
         type: string
